@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama Web Interface</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        textarea, button { width: 100%; margin-top: 10px; }
+        .response { margin-top: 20px; white-space: pre-wrap; background: #f4f4f4; padding: 10px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ollama Query Interface</h1>
+        <textarea id="prompt" rows="4" placeholder="Enter your prompt here"></textarea>
+        <button id="submitBtn">Submit</button>
+        <div id="response" class="response"></div>
+    </div>
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', async () => {
+            const prompt = document.getElementById('prompt').value;
+            const responseDiv = document.getElementById('response');
+            let partialResponse = '';  // To accumulate the full response
+
+            try {
+                const res = await fetch('/api/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                const dataString = await res.json();
+                const jsonStrings = dataString.trim().split('\n');
+
+                // Convert each string into a JavaScript object
+                const jsonObjects = jsonStrings.map(str => JSON.parse(str));
+
+                jsonObjects.forEach(data => {
+                    // Append the response field if it exists
+                    if (data.response) {
+                        partialResponse += data.response;
+                    }
+                });
+
+                responseDiv.textContent = partialResponse || 'No response from Ollama';
+            } catch (error) {
+                responseDiv.textContent = 'Error: Could not reach Ollama';
+            }
+        });
+    </script>
+</body>
+</html>
