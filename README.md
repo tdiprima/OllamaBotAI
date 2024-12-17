@@ -9,7 +9,7 @@ To get started, run the following command in your terminal:
 node server.js
 ```
 
-This will start the server. Next, open the `index.html` file in the `public` folder using Visual Studio Code, and you're ready to interact with the chatbot.
+This will start the server. Open http://localhost:3002/, and you're ready to interact with the chatbot.
 
 ### Running the Python Script
 
