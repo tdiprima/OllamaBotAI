@@ -1,4 +1,9 @@
 # Ollama Bot AI
+
+![License](https://img.shields.io/github/license/tdiprima/OllamaBotAI)
+![Languages](https://img.shields.io/github/languages/top/tdiprima/OllamaBotAI)
+![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)
+
 A chatbot implementation that leverages Node.js and Python, providing a flexible alternative for developers.
 
 ### Running the Node.js Chatbot
